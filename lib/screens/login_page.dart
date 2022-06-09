@@ -1,12 +1,14 @@
 // todo: delete old db , convert password to caps ,
 
 import 'dart:convert';
+import 'package:ap_explore/constants/ursl.dart';
 import 'package:ap_explore/database/database_helper.dart';
 import 'package:ap_explore/screens/homescreen.dart';
+import 'package:ap_explore/widgets/ap_explore_elevated_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:ap_explore/widgets/ap_explore_image.dart';
 import 'package:flutter/material.dart';
-import 'package:ap_explore/widgets/globals.dart';
+import 'package:ap_explore/constants/globals.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -74,6 +76,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           return "Please enter a username";
                         }
                       },
+                     
+
                       controller: usernameController,
                       autofocus: false,
                       decoration: InputDecoration(
@@ -119,11 +123,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null;
                         }
                       },
+                       obscureText: true,
+                       autocorrect: false,
+                       enableSuggestions: false,
                       controller: passwordController,
                       // obscureText: true,
                       autofocus: false,
                       decoration: InputDecoration(
-                        labelText: 'Password',
                         focusColor: Colors.black,
                         contentPadding: const EdgeInsets.all(15.0),
                         suffixIconColor: Colors.black87,
@@ -146,13 +152,9 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      textStyle: const TextStyle(fontWeight: FontWeight.bold),
-                      minimumSize: Size(deviceScreen.width / 2.5, 50),
-                      elevation: 0.1,
-                    ),
-                    onPressed: () {
+                  ApExploreButton(
+                    buttonName: "Accesar",
+                    onButtonPressed: () {
                       final form = _formkey.currentState;
                       if (form!.validate()) {
                         setState(() {
@@ -162,37 +164,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             usernameController.text, passwordController.text);
                       }
                     },
-                    child: const Text(
-                      "Accesar",
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 15,
-                      ),
-                    ),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
-                      textStyle: const TextStyle(fontWeight: FontWeight.bold),
-                      minimumSize: Size(deviceScreen.width / 2.5, 50),
-                      elevation: 0.1,
-                    ),
-                    onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const TestFeature(),
-                      //   ),
-                      // );
-                    },
-                    child: const Text(
-                      "Cancelar",
-                      style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 15,
-                      ),
-                    ),
-                  )
+                  ApExploreButton(
+                    buttonName: "Cancelar",
+                    onButtonPressed: () {},
+                  ),
                 ],
               ),
               const FractionallySizedBox(
@@ -207,12 +183,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void queryUserInDb() async {}
 
-  final usersDatabaseEndpoint =
-      "http://79.143.190.196:8080/jinvmanz/servletwwwSyncData?xAccion=extraeUsuariosSystema&xExterno=1&xDatabase=dbexplore2223";
-
+ 
   void fetchUsersdatabase() async {
     try {
-      var usersDatabaseEndpointUrl = Uri.parse(usersDatabaseEndpoint);
+      var usersDatabaseEndpointUrl = Uri.parse(userLoginUrl);
       var usersDatabaseEndpointResponse =
           await http.get(usersDatabaseEndpointUrl);
       final usersDatabaseEndpointJson =
@@ -226,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void saveUsersToDatabase(usersDatabaseEndpointJson) async {
     // check if database exits if yes then delete
     for (var users in usersDatabaseEndpointJson) {
-      final db = await UsersDatabase.instance.createUser(users);
+      await UsersDatabase.instance.createUser(users);
     }
   }
 
@@ -255,35 +229,39 @@ class _LoginScreenState extends State<LoginScreen> {
     // this lines the type from dynamic to string
     final String userName = username;
     final String passWord = password;
-
-    final checkUser = await UsersDatabase.instance.readUser(userName, passWord);
-    final returnedUsernameFromDB = checkUser[0]["user"];
-    final returnedPasswordFromDB = checkUser[0]["password"];
-    // if username from keyboard is the not same as that from the database
-    if (userName != returnedUsernameFromDB) {
-      displaySnackBar("Username does not exist");
-      return;
-    }
-
-    // check if username from keyboard is the same as that from the database
-    if (userName == returnedUsernameFromDB) {
-      // check if password from keyboard is not the same as that from the database
-      if (passWord != returnedPasswordFromDB) {
-        displaySnackBar("Wrong password ");
+    try {
+      final checkUser =
+          await UsersDatabase.instance.readUser(userName, passWord);
+      final returnedUsernameFromDB = checkUser[0]["user"];
+      final returnedPasswordFromDB = checkUser[0]["password"];
+      // if username from keyboard is the not same as that from the database
+      if (userName != returnedUsernameFromDB) {
+        displaySnackBar("Username does not exist");
         return;
       }
-      // check if password from keyboard is the same as that from the database
-      if (passWord == returnedPasswordFromDB) {
-        displaySnackBar("Login successfull");
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
-          ),
-        );
+
+      // check if username from keyboard is the same as that from the database
+      if (userName == returnedUsernameFromDB) {
+        // check if password from keyboard is not the same as that from the database
+        if (passWord != returnedPasswordFromDB) {
+          displaySnackBar("Wrong password ");
+          return;
+        }
+        // check if password from keyboard is the same as that from the database
+        if (passWord == returnedPasswordFromDB) {
+          displaySnackBar("Login successfull");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            ),
+          );
+        }
+      } else {
+        displaySnackBar("Invalid login credentials");
       }
-    } else {
-      displaySnackBar("Invalid login credentials");
+    } catch (error) {
+      displaySnackBar("user doesnt exists");
     }
   }
 }

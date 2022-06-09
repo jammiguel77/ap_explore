@@ -1,5 +1,5 @@
-import 'package:ap_explore/screens/configuracion_screen.dart';
-import 'package:ap_explore/screens/fetch_data_screen.dart';
+import 'package:ap_explore/screens/sincronizar_screen.dart';
+import 'package:ap_explore/screens/fetcha_screen.dart';
 import 'package:ap_explore/widgets/ap_explore_image.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FetchDataScreen(),
+                      builder: (context) => const FetchaScreen(),
                     ),
                   );
                 },
@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ConfiguracionScreen(),
+                      builder: (context) => const SincronizarScreen(),
                     ),
                   );
                 },
