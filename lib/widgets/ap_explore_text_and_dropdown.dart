@@ -1,4 +1,4 @@
-import 'package:ap_explore/widgets/ap_explore_dropdown.dart';
+import 'package:ap_explore/widgets/dropdowns/ap_explore_dropdown.dart';
 import 'package:flutter/material.dart';
 
 class ApExploreTextAndDropDown extends StatelessWidget {

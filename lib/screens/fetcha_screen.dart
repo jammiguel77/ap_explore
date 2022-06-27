@@ -1,12 +1,14 @@
 import 'package:ap_explore/constants/ursl.dart';
 import 'package:ap_explore/screens/perforacion_screen.dart';
-import 'package:ap_explore/widgets/ap_explore_dropdown_search.dart';
+import 'package:ap_explore/widgets/dropdowns/diametro_dropdown.dart';
+import 'package:ap_explore/widgets/dropdowns/maquina_dropdown.dart';
 import 'package:ap_explore/widgets/ap_explore_elevated_button.dart';
 import 'package:ap_explore/widgets/ap_explore_note_widget.dart';
 import 'package:ap_explore/widgets/ap_explore_text_and_dropdown.dart';
 import 'package:ap_explore/widgets/ap_explore_text_and_textfield.dart';
 import 'package:ap_explore/widgets/ap_explore_textfield_and_datepicker.dart';
 import 'package:ap_explore/constants/globals.dart';
+import 'package:ap_explore/widgets/dropdowns/turno_dropdown.dart';
 import 'package:flutter/material.dart';
 
 class FetchaScreen extends StatefulWidget {
@@ -32,12 +34,9 @@ class _FetchaScreenState extends State<FetchaScreen> {
             const ApExploreTextFieldAndDatePicker(
               textName: "Fecha:",
             ),
-            const Padding(
-              padding: EdgeInsets.all(15.0),
-              child: ApExploreDropDownSearch(
-                dropDownUrl: maquinaUrl,
-                dropDownTitle: "Maquina",
-              ),
+            const MaquinaDropDown(
+              dropDownUrl: maquinaUrl,
+              dropDownTitle: "Maquina",
             ),
             const ApExploreTextAndTextField(
               textName: "Barreno",
@@ -45,13 +44,13 @@ class _FetchaScreenState extends State<FetchaScreen> {
             const ApExploreTextAndTextField(
               textName: "Inclinacion",
             ),
-            const ApExploreTextAndDropDown(
-              textName: "Diametro:",
-              dropDownItems: [],
+            const DiametroDropDown(
+              dropDownTitle: "Diametro",
+              dropDownUrl: diametroUrl,
             ),
-            const ApExploreTextAndDropDown(
-              textName: "Turno:",
-              dropDownItems: [],
+            const TurnoDropDown(
+              dropDownTitle: "Turno",
+              dropDownUrl: turnoUrl,
             ),
             const ApExploreTextAndDropDown(
               textName: "Perforista:",
