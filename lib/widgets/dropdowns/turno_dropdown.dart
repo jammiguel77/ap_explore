@@ -46,6 +46,7 @@ class _TurnoDropDownState extends State<TurnoDropDown> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: DropdownSearch(
+        items: data.map((item) => item).toList(),
         dropdownBuilder: _customDropDown,
         popupProps: PopupProps.menu(
             showSearchBox: true,
