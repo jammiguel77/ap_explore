@@ -37,16 +37,27 @@ class PerforacionScreen extends StatelessWidget {
             const ApExploreNoteWiget(
               textFieldName: "Notas",
             ),
-            ApExploreButton(
-              buttonName: "Siguiente",
-              onButtonPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const TiemposHorasScreen(),
-                  ),
-                );
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ApExploreButton(
+                  buttonName: "Atras",
+                  onButtonPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                ApExploreButton(
+                  buttonName: "Siguiente",
+                  onButtonPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const TiemposHorasScreen(),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           ],
         ),

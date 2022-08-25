@@ -46,18 +46,17 @@ class _MaquinaDropDownState extends State<MaquinaDropDown> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: DropdownSearch(
-        mode: Mode.MENU,
-        showSelectedItems: false,
         items: data.map((item) => item).toList(),
         dropdownBuilder: _customDropDown,
-        popupItemBuilder: _customPopupItemBuilder,
+        popupProps: PopupProps.menu(
+            showSearchBox: true,
+            itemBuilder: _customPopupItemBuilder,
+            searchFieldProps: TextFieldProps(
+                decoration: InputDecoration(
+                    labelText: widget.dropDownTitle,
+                    labelStyle: const TextStyle(color: Colors.black)))),
 
-        // dropdownSearchDecoration: InputDecoration(
-        //     labelText: widget.dropDownTitle,
-        //     labelStyle: const TextStyle(color: Colors.black)),
         onChanged: itemSelectionChanged,
-        showSearchBox: true,
-        // compareFn: null,
         selectedItem: dropDownSelection,
       ),
     );
@@ -68,7 +67,7 @@ class _MaquinaDropDownState extends State<MaquinaDropDown> {
       return Text(widget.dropDownTitle);
     }
     return DropdownMenuItem(
-      child: Text(item["DESCRIPCION"] + "  " + item["NUMERO"]),
+      child: Text(item["DESCRIPCION"] + " " + item["NUMERO"]),
       value: item["IID"].toString(),
       enabled: true,
     );

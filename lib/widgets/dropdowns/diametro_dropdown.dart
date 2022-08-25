@@ -46,18 +46,17 @@ class _DiametroDropDownState extends State<DiametroDropDown> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: DropdownSearch(
-        mode: Mode.MENU,
-        showSelectedItems: false,
         items: data.map((item) => item).toList(),
-        dropdownBuilder: _customDropDown,
-        popupItemBuilder: _customPopupItemBuilder,
 
-        // dropdownSearchDecoration: const InputDecoration(
-        //     // labelText: widget.dropDownTitle,
-        //     labelStyle: TextStyle(color: Colors.black)),
+        dropdownBuilder: _customDropDown,
+        popupProps: PopupProps.menu(
+            showSearchBox: true,
+            itemBuilder: _customPopupItemBuilder,
+            searchFieldProps: TextFieldProps(
+                decoration: InputDecoration(
+                    labelText: widget.dropDownTitle,
+                    labelStyle: const TextStyle(color: Colors.black)))),
         onChanged: itemSelectionChanged,
-        showSearchBox: true,
-        // compareFn: null,
         selectedItem: dropDownSelection,
       ),
     );
