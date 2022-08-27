@@ -1,0 +1,22 @@
+ Volume in drive C is OS
+ Volume Serial Number is 4E79-C106
+
+ Directory of C:\zprogramas\flutter\ap_explorer
+
+08/27/2022  06:34 AM    <DIR>          .
+08/27/2022  06:30 AM    <DIR>          ..
+08/27/2022  06:29 AM               778 .gitignore
+08/27/2022  06:29 AM               315 .metadata
+08/27/2022  06:29 AM             1,482 analysis_options.yaml
+08/27/2022  06:29 AM    <DIR>          android
+08/27/2022  06:29 AM    <DIR>          images
+08/27/2022  06:29 AM    <DIR>          ios
+08/27/2022  06:29 AM    <DIR>          lib
+08/27/2022  06:29 AM             5,136 pubspec.lock
+08/27/2022  06:29 AM             3,778 pubspec.yaml
+08/27/2022  06:29 AM               584 README.md
+08/27/2022  06:29 AM    <DIR>          test
+08/27/2022  06:29 AM    <DIR>          web
+08/27/2022  06:34 AM                 0 x.txt
+               7 File(s)         12,073 bytes
+               8 Dir(s)  1,627,209,945,088 bytes free
